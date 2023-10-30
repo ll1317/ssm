@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.BookMapper">
+	
+	<select id="selectById" resultType="BookBean">
+	select * from book where BookId=#{BookId};
+	</select>
+	<select id="selectAll" resultType="BookBean">
+	select * from book;
+	</select>
+	<update id="update">
+	update book
+	<set>
+	<if test="BookId != null and BookId !=''">
+	BookId=#{BookId},
+	</if>
+	<if test="ISBN != null and ISBN !=''">
+	ISBN=#{ISBN},
+	</if>
+	<if test="BookName != null and BookName !=''">
+	BookName=#{BookName},
+	</if>
+	<if test="Author != null and Author !=''">
+	Author=#{Author},
+	</if>
+	<if test="Price != null">
+	Price=#{Price},
+	</if>
+	<if test="Num != null">
+	Num=#{Num}
+	</if>
+	</set>
+	where BookId=#{BookId};
+	</update>
+	<insert id="add">
+	insert into shoppingcar(Number,ShoppingId,BookId)
+	values(#{Number},#{ShoppingId},#{BookId});
+	</insert>
+	<select id="selectShoppingCar" resultType="BookBean">
+	select book.BookId,book.Author,book.Price
+    from book,shoppingcar
+    where shoppingcar.BookId=book.BookId;
+	</select>
+</mapper>
